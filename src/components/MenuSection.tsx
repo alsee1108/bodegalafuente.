@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { X } from "lucide-react";
 import tapasImg from "@/assets/tapas-spread.jpg";
+import cartaImg from "@/assets/carta-restaurante.jpg";
 
 const categories = [
   {
@@ -20,7 +23,10 @@ const categories = [
   },
 ];
 
-const MenuSection = () => (
+const MenuSection = () => {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  return (
   <section id="carta" className="py-24 bg-card">
     <div className="container mx-auto px-4">
       <motion.div
@@ -61,6 +67,27 @@ const MenuSection = () => (
         ))}
       </div>
 
+      {/* Carta del restaurante */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-16 text-center"
+      >
+        <p className="text-muted-foreground mb-4 font-body">Consulta nuestra carta completa</p>
+        <div
+          className="relative rounded-xl overflow-hidden max-w-2xl mx-auto cursor-pointer group border border-border"
+          onClick={() => setLightboxOpen(true)}
+        >
+          <img src={cartaImg} alt="Carta de Bodega La Fuente" className="w-full object-contain" />
+          <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/10 transition-colors flex items-center justify-center">
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-primary text-primary-foreground px-4 py-2 rounded-md font-body text-sm">
+              Ver carta completa
+            </span>
+          </div>
+        </div>
+      </motion.div>
+
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -75,7 +102,29 @@ const MenuSection = () => (
         </div>
       </motion.div>
     </div>
+
+    {/* Lightbox */}
+    {lightboxOpen && (
+      <div
+        className="fixed inset-0 z-50 bg-foreground/90 flex items-center justify-center p-4"
+        onClick={() => setLightboxOpen(false)}
+      >
+        <button
+          className="absolute top-4 right-4 text-background hover:text-accent transition-colors"
+          onClick={() => setLightboxOpen(false)}
+        >
+          <X size={32} />
+        </button>
+        <img
+          src={cartaImg}
+          alt="Carta de Bodega La Fuente"
+          className="max-w-full max-h-[90vh] object-contain rounded-lg"
+          onClick={(e) => e.stopPropagation()}
+        />
+      </div>
+    )}
   </section>
-);
+  );
+};
 
 export default MenuSection;
