@@ -1,5 +1,8 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { X } from "lucide-react";
 import tapasImg from "@/assets/tapas-spread.jpg";
+import cartaImg from "@/assets/carta-restaurante.jpg";
 
 const categories = [
   {
