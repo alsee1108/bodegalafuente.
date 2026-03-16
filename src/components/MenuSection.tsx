@@ -23,7 +23,10 @@ const categories = [
   },
 ];
 
-const MenuSection = () => (
+const MenuSection = () => {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  return (
   <section id="carta" className="py-24 bg-card">
     <div className="container mx-auto px-4">
       <motion.div
